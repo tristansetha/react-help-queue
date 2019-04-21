@@ -1,11 +1,24 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./components/App";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App';
+import { AppContainer } from 'react-hot-loader';
 
-ReactDOM.render(
-  <App/>,
-  document.getElementById('react-app-root')
-);
+const render = (Component) => {
+  ReactDOM.render(
+    <AppContainer>
+      <Component/>
+    </AppContainer>,
+    document.getElementById('react-app-root')
+  );
+};
+
+render(App);
+
+if (module.hot) {
+  module.hot.accept('./components/App', () => {
+    render(App)
+  });
+}
 // var heading = React.createElement('h1', {}, 'Help, Queue');
 // var ticketLocation = React.createElement('h3', {}, '3a');
 // var ticketNames = React.createElement('h3', {}, 'Thato and Haley');
