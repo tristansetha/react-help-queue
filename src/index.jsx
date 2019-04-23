@@ -14,11 +14,14 @@ const render = (Component) => {
 
 render(App);
 
+/*eslint-disable */
 if (module.hot) {
   module.hot.accept('./components/App', () => {
-    render(App)
+    render(App);
   });
 }
+/*eslint-enable */
+
 // var heading = React.createElement('h1', {}, 'Help, Queue');
 // var ticketLocation = React.createElement('h3', {}, '3a');
 // var ticketNames = React.createElement('h3', {}, 'Thato and Haley');
