@@ -51,7 +51,8 @@ module.exports = {
             "react",
           ],
           plugins: [
-            "react-hot-loader/babel"
+            "react-hot-loader/babel",
+            "styled-jsx/babel"
           ]
         }
       }
@@ -69,3 +70,8 @@ module.exports = {
     }),
   ]
 };
+
+// Because we've configured our linter to work as a Webpack loader, 
+// ESLint will now automatically check our code whenever Webpack bundles it. 
+// (Even during hot module replacement while the dev server is live!)
+
