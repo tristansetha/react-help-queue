@@ -4,9 +4,14 @@
   "description": "first react lesson. introduction to standard enviroment tools",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "start":  "webpack-dev-server",
+=======
+    "start": "webpack-dev-server",
+>>>>>>> 1e43bc45e179cfd49389b677b4560a163f8673b1
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint src/** src/**/**; exit 0"
+    "lint": "eslint src/** src/**/**; exit 0",
+    "lint-fix": "eslint src/** src/**/** --fix; exit 0"
   },
   "author": "tristan setha",
   "license": "ISC",
@@ -14,7 +19,11 @@
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+<<<<<<< HEAD
     "react-router-dom": "^4.0.0"
+=======
+    "styled-jsx": "^3.2.1"
+>>>>>>> 1e43bc45e179cfd49389b677b4560a163f8673b1
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
