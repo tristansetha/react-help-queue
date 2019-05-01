@@ -20,7 +20,9 @@ class NewTicketControl extends React.Component {
   //   console.log('formVisibleOnPage is currently set to:' + this.state.formVisibleOnPage);
   // }
 
+
   handleTroubleshootingConfirmation(){
+    // this.state = {test: 'hey'};... testing state mutation eslint rule
     this.setState({formVisibleOnPage: true});
   }
 
