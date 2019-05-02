@@ -57,6 +57,7 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.state.masterTicketList);
     // when we call render insted of component we are overriding the built-in render() method of this Route to return the JSX for our component and its prop
     return (
       <div>
