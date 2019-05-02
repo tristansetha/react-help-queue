@@ -8,6 +8,8 @@ import Error404 from './Error404';
 import Moment from 'moment';
 import Admin from './Admin';
 import Footer from './Footer';
+import { v4 } from 'uuid';
+
 
 
 class App extends React.Component {
@@ -44,11 +46,11 @@ class App extends React.Component {
   }
 
   handleAddingNewTicketToList(newTicket) {
-    // creating a copy of the masterTicketList state and pushing the tickets to it and setting the state to this new list
+    var newTicketId = v4();
     var newMasterTicketList = Object.assign({}, this.state.masterTicketList, {
-      [newTicket.id]: newTicket
+      [newTicketId]: newTicket
     });
-    newMasterTicketList[newTicket.id].formattedWaitTime = newMasterTicketList[newTicket.id].timeOpen.fromNow(true);
+    newMasterTicketList[newTicketId].formattedWaitTime = newMasterTicketList[newTicketId].timeOpen.fromNow(true);
     this.setState({masterTicketList: newMasterTicketList});
   }
 
