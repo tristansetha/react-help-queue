@@ -6,6 +6,8 @@ import NewTicketControl from './NewTicketControl';
 import { Switch, Route } from 'react-router-dom';
 import Error404 from './Error404';
 import Moment from 'moment';
+import Admin from './Admin';
+import Footer from './Footer';
 
 
 class App extends React.Component {
@@ -13,51 +15,27 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      masterTicketList: []
+      masterTicketList: {},
+      selectedTicket: null
     };
     this.handleAddingNewTicketToList = this.handleAddingNewTicketToList.bind(this);
+    this.handleChangingSelectedTicket = this.handleChangingSelectedTicket.bind(this);
   }
 
   componentDidMount() {
     this.waitTimeUpdateTime = setInterval(() =>
       this.updateTicketElapsedWaitTime(),
-      60000
+    60000
     );
-  }
-
-  componentWillUnmount(){
-    console.log('componentWillUnmount');
-    clearInterval(this.waitTimeUpdateTimer);
-  }
-
-  componentWillMount() {
-    console.log('componentWillMount');
-  }
-
-  componentWillReceiveProps() {
-    console.log('componentWillReceiveProps');
-  }
-
-  shouldComponentUpdate() {
-    console.log('shouldComponentUpdate');
-    return true;
-  }
-
-  componentWillUpdate() {
-    console.log('componentWillUpdate');
-  }
-
-  componentDidUpdate() {
-    console.log('componentDidUpdate');
   }
   
   updateTicketElapsedWaitTime() {
-    console.log("check");
-    let newMasterTicketList = this.state.masterTicketList.slice();
-    newMasterTicketList.forEach((ticket) => 
-      ticket.formattedWaitTime = (ticket.timeOpen).fromNow(true)
-    );
-    this.setState({masterTicketList: newMasterTicketList})
+    console.log('check');
+    var newMasterTicketList = Object.assign({}, this.state.masterTicketList);
+    Object.keys(newMasterTicketList).forEach(ticketId => {
+      newMasterTicketList[ticketId].formattedWaitTime = (newMasterTicketList[ticketId].timeOpen).fromNow(true);
+    });
+    this.setState({masterTicketList: newMasterTicketList});
   }
 
 
@@ -66,27 +44,63 @@ class App extends React.Component {
   }
 
   handleAddingNewTicketToList(newTicket) {
-    var newMasterTicketList = this.state.masterTicketList.slice();
-    newTicket.formattedWaitTime = (newTicket.timeOpen).fromNow(true)
-    newMasterTicketList.push(newTicket);
+    // creating a copy of the masterTicketList state and pushing the tickets to it and setting the state to this new list
+    var newMasterTicketList = Object.assign({}, this.state.masterTicketList, {
+      [newTicket.id]: newTicket
+    });
+    newMasterTicketList[newTicket.id].formattedWaitTime = newMasterTicketList[newTicket.id].timeOpen.fromNow(true);
     this.setState({masterTicketList: newMasterTicketList});
   }
 
+  handleChangingSelectedTicket(ticket){
+    this.setState({selectedTicket: ticketId});
+  }
+
   render() {
+    // when we call render insted of component we are overriding the built-in render() method of this Route to return the JSX for our component and its prop
     return (
       <div>
+        <style global jsx>{`
+          font-family: helvetica;
+        `}</style>
         <Header/>
         <Switch>
-        <Route exact path='/' render={()=><TicketList ticketList={this.state.masterTicketList} />} />
-          <Route path='/newticket' render={()=><NewTicketControl onNewTicketCreation={this.handleAddingNewTicketToList} />} />  
+          <Route exact path='/' render={()=><TicketList ticketList={this.state.masterTicketList}/>} />
+          <Route path='/newticket' render={()=><NewTicketControl onNewTicketCreation={this.handleAddingNewTicketToList} />} /> 
+          <Route path='/admin' render={(props)=><Admin ticketList={this.state.masterTicketList} currentRouterPath={props.location.pathname}
+            onTicketSelection={this.handleChangingSelectedTicket} 
+            selectedTicket={this.state.selectedTicket}/>}/>
           <Route component={Error404} />
         </Switch>
+        <Footer/>
       </div>
     );
   }
 }
 
 export default App;
+
+
+// componentWillMount() {
+//   console.log('componentWillMount');
+// }
+
+// componentWillReceiveProps() {
+//   console.log('componentWillReceiveProps');
+// }
+
+// shouldComponentUpdate() {
+//   console.log('shouldComponentUpdate');
+//   return true;
+// }
+
+// componentWillUpdate() {
+//   console.log('componentWillUpdate');
+// }
+
+// componentDidUpdate() {
+//   console.log('componentDidUpdate');
+// }
 
 // var masterTicketList = [
 //   {
