@@ -2,6 +2,8 @@ import React from 'react';
 import Moment from 'moment';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
+import PropTypes from 'prop-types';
+import c from './../constants';
 
 function NewTicketForm(props){
   let _names = null;
@@ -13,12 +15,13 @@ function NewTicketForm(props){
     const { dispatch } = props;
     event.preventDefault();
     const action = {
-      type: 'ADD_TICKET',
+      type: c.ADD_TICKET,
       id: v4(),
       names: _names.value,
       location: _location.value,
       issue: _issue.value,
-      timeOpen: new Moment()
+      timeOpen: new Moment(),
+      formattedWaitTime: new Moment().fromNow(true)
     };
     //This will dispatch an 'ADD_TICKET' action, invoking this block of code in our reducer:
     dispatch(action);
@@ -50,6 +53,10 @@ function NewTicketForm(props){
     </div>
   );
 }
+
+NewTicketForm.propTypes = {
+  dispatch: PropTypes.func
+};
 
 // NewTicketForm = connect()(NewTicketForm);
 // NewTicketForm = connect()(NewTicketForm); redefines the entire NewTicketForm component as the return value of connect().

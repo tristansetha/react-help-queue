@@ -1,5 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import TicketDetail from './TicketDetail';
+import c from './../constants';
+
+
 // import Moment from 'moment';
 
 function Ticket(props){
@@ -10,15 +15,29 @@ function Ticket(props){
   //     }
   //   `}</style>
   // </div>
+
+  // This function will retrieve the dispatch() method connect() provides, construct a SELECT_TICKET action containing the ticket's ID, then dispatch that action, which will invoke the 'SELECT_TICKET' block of code in our selectedTicketReducer logic.
+  function handleSavingSelectedTicket(ticketId){
+    const { dispatch } = props;
+    const action = {
+      type: c.SELECT_TICKET,
+      ticketId: TicketDetail
+    };
+    dispatch(action);
+  }
+
+
   const ticketInformation =
     <div>
       <h3>{props.location} - {props.names}</h3>
-      <h4>{props.formattedWaitTime}</h4>
+      {/* <h4>{props.formattedWaitTime}</h4> */}
       <hr/>
     </div>;
   if (props.currentRouterPath === '/admin') {
     return (
-      <div onClick={() => {props.onTicketSelection(props.ticketId);}}>
+      //We'll call this method in Ticket's existing onClick event instead of the onTicketSelection prop:
+      <div onClick={() => {handleSavingSelectedTicket(props.ticketId);}}>
+        {ticketInformation}
       </div>
     );
   } else {
@@ -36,8 +55,7 @@ Ticket.propTypes = {
   issue: PropTypes.string,
   formattedWaitTime: PropTypes.string.isRequired,
   currentRouterPath: PropTypes.string,
-  onTicketSelection: PropTypes.func,
   ticketId: PropTypes.string.isRequired
 };
 
-export default Ticket;
+export default connect()(Ticket);
