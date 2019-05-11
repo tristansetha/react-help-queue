@@ -21,11 +21,11 @@ export default (state = {}, action) => {
   // Because this reducer is responsible for our list of tickets it must return the whole list; even though we're only updating one property on one ticket.
   case c.UPDATE_TIME:
   //onstruct a copy of the ticket we're updating that also includes an up-to-date formattedWaitTime:
-  const newTicket = Object.assign({}, state[id], {formattedWaitTime});
-  // use Object.assign() again to reconstruct the entire state object to include the newTicket entry we just compiled:
-  newState = Object.assign({}, state, {
-    [id]: newTicket
-  })
+    const newTicket = Object.assign({}, state[id], {formattedWaitTime});
+    // use Object.assign() again to reconstruct the entire state object to include the newTicket entry we just compiled:
+    newState = Object.assign({}, state, {
+      [id]: newTicket
+    });
     return newState;
   default:
     return state;

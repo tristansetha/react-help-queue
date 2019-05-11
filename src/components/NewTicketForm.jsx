@@ -54,9 +54,9 @@ function NewTicketForm(props){
   );
 }
 
-NewTicketForm.propTypes = {
-  dispatch: PropTypes.func
-};
+// NewTicketForm.propTypes = {
+//   dispatch: PropTypes.func
+// };
 
 // NewTicketForm = connect()(NewTicketForm);
 // NewTicketForm = connect()(NewTicketForm); redefines the entire NewTicketForm component as the return value of connect().
