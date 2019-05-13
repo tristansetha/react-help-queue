@@ -24,7 +24,6 @@ function receiveTicket(ticketFromFirebase) {
   };
 }
 
-
 export function watchFirebaseTicketsRef() {
   return function(dispatch) {
 
