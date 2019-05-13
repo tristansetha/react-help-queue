@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from './Header';
 import TicketList from './TicketList';
-// import NewTicketForm from './NewTicketForm';
 import NewTicketControl from './NewTicketControl';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import Error404 from './Error404';
@@ -10,10 +9,18 @@ import Admin from './Admin';
 import Footer from './Footer';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import c from './../constants';
+import constants from './../constants';
+import * as actions from './../actions';
 
 
 class App extends React.Component {
+
+  //componentWillMount() runs before a component mounts in the DOM. This is the perfect time to dispatch watchFirebaseTicketsRef() because we'll retrieve tickets before the component renders. If we retrieved them after, our UI would momentarily appear empty before tickets arrived
+  componentWillMount() {
+    const { dispatch } = this.props;
+    const { watchFirebaseTicketsRef } = actions;
+    dispatch(watchFirebaseTicketsRef());
+  }
 
   componentDidMount() {
     this.waitTimeUpdateTime = setInterval(() =>
@@ -30,9 +37,10 @@ class App extends React.Component {
 
   updateTicketElapsedWaitTime() {
     const { dispatch } = this.props;
+    const { c } = constants;
     Object.keys(this.props.masterTicketList).map(ticketId => {
       const ticket = this.props.masterTicketList[ticketId];
-      const newFormattedWaitTime = ticket.timeOpen.fromNow(true);
+      const newFormattedWaitTime = new Moment(ticket.timeOpen).from(new Moment());
       const action = {
         type: c.UPDATE_TIME,
         id: ticketId,

@@ -1,4 +1,6 @@
-import c from './../constants';
+import constants from './../constants';
+
+const { c } = constants;
 
 //ticket-list-reducer.js will contain an empty function that takes state and action as arguments, just like the reducers from our karaoke project:
 export default (state = {}, action) => {
@@ -6,7 +8,7 @@ export default (state = {}, action) => {
   const { names, location, issue, timeOpen, id, formattedWaitTime } = action;
 
   switch (action.type) {
-  case 'ADD_TICKET':
+  case c.ADD_TICKET:
     newState = Object.assign({}, state, {
       [id]: {
         names: names,
@@ -26,6 +28,11 @@ export default (state = {}, action) => {
     newState = Object.assign({}, state, {
       [id]: newTicket
     });
+    return newState;
+
+  case c.RECEIVE_TICKET:
+    newState = Object.assign({}, state);
+    newState[action.ticket.id] = action.ticket;
     return newState;
   default:
     return state;

@@ -2,8 +2,12 @@ import React from 'react';
 import Moment from 'moment';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
-import PropTypes from 'prop-types';
-import c from './../constants';
+// import PropTypes from 'prop-types';
+import constants from './../constants';
+import { addTicket } from './../actions';
+//addTicket() action is actually an async action because it takes a few moments to contact our cloud-based database using Firebase API methods.
+
+const { c } = constants;
 
 function NewTicketForm(props){
   let _names = null;
@@ -11,20 +15,11 @@ function NewTicketForm(props){
   let _issue = null;
 
   function handleNewTicketFormSubmission(event) {
+    event.preventDefault();
     // snag the dispatch() method from props:
     const { dispatch } = props;
-    event.preventDefault();
-    const action = {
-      type: c.ADD_TICKET,
-      id: v4(),
-      names: _names.value,
-      location: _location.value,
-      issue: _issue.value,
-      timeOpen: new Moment(),
-      formattedWaitTime: new Moment().fromNow(true)
-    };
     //This will dispatch an 'ADD_TICKET' action, invoking this block of code in our reducer:
-    dispatch(action);
+    dispatch(addTicket(_names.value, _location.value, _issue.value));
     _names.value= '';
     _location.value = '';
     _issue.value = '';

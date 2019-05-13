@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TicketList from './TicketList';
 import TicketDetail from './TicketDetail';
-import { connect } from 'react-redux'; //1
+import { connect } from 'react-redux'; 
 
 function Admin(props){
   let optionalSelectedTicketContent = null;
