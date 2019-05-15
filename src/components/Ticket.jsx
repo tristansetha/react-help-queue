@@ -10,6 +10,7 @@ const { c } = constants;
 // import Moment from 'moment';
 
 function Ticket(props){
+  
   // <div>
   //   <style jsx>{`
   //     div {
